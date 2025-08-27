@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Halaman Sederhana | Contoh HTML + CSS</title>
+  <meta name="description" content="Contoh halaman web sederhana menggunakan HTML dan CSS: navigasi, hero, kartu fitur, dan formulir kontak. Responsif dan rapi." />
+
+  <!-- Open Graph dasar untuk SEO -->
+  <meta property="og:title" content="Halaman Sederhana | Contoh HTML + CSS" />
+  <meta property="og:description" content="Contoh halaman web sederhana menggunakan HTML dan CSS." />
+  <meta property="og:type" content="website" />
+
+  <style>
+    /* ==========
+       Reset & Variabel
+       ========== */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    :root{
+      --bg: #ffffff;
+      --text: #0f172a;        /* slate-900 */
+      --muted: #475569;       /* slate-600 */
+      --border: #e2e8f0;      /* slate-200 */
+      --accent: #0ea5e9;      /* sky-500 */
+      --accent-700: #0369a1;  /* sky-700 */
+      --surface: #f8fafc;     /* slate-50 */
+      --radius: 12px;
+      --shadow: 0 10px 25px rgba(15, 23, 42, 0.06);
+    }
+
+    /* ==========
+       Global
+       ========== */
+    body{
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+    }
+    a{ color: var(--accent); text-decoration: none; }
+    a:hover{ text-decoration: underline; }
+    img{ max-width: 100%; display: block; }
+    .container{ width: min(1100px, 92vw); margin-inline: auto; }
+
+    /* Fokus yang jelas untuk aksesibilitas */
+    :focus-visible{
+      outline: 3px solid var(--accent);
+      outline-offset: 3px;
+      border-radius: 6px;
+    }
+
+    /* ==========
+       Header & Navigasi
+       ========== */
+    .skip-link{
+      position: absolute; left: -9999px; top: -9999px;
+    }
+    .skip-link:focus{
+      left: 1rem; top: 1rem; background: var(--bg); padding: .5rem .75rem; border: 1px solid var(--border);
+    }
+
+    header{
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,.8);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav{
+      display: flex; align-items: center; justify-content: space-between;
+      padding: .9rem 0;
+    }
+    .brand{
+      font-weight: 700; letter-spacing: .3px;
+    }
+    .nav ul{
+      list-style: none; display: flex; gap: 1rem; margin: 0; padding: 0;
+    }
+    .nav a{
+      padding: .5rem .75rem; border-radius: 8px;
+    }
+    .nav a:hover{
+      background: var(--surface); text-decoration: none;
+    }
+
+    /* ==========
+       Hero
+       ========== */
+    .hero{
+      background:
+        radial-gradient(60rem 60rem at 10% 10%, rgba(14,165,233,.08), transparent 40%),
+        radial-gradient(60rem 60rem at 90% 0%, rgba(14,165,233,.08), transparent 40%),
+        linear-gradient(180deg, #ffffff 0%, #f9fbfd 100%);
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-inner{
+      display: grid; gap: 1.5rem; padding: 3.5rem 0;
+      grid-template-columns: 1.1fr .9fr;
+      align-items: center;
+    }
+    .hero h1{
+      margin: 0 0 .5rem; font-size: clamp(1.8rem, 3.5vw, 2.6rem); line-height: 1.2;
+    }
+    .hero p{ color: var(--muted); margin: 0 0 1.2rem; }
+    .cta{
+      display: inline-block; background: var(--accent); color: #fff; font-weight: 600;
+      padding: .75rem 1rem; border-radius: 10px; box-shadow: var(--shadow);
+      border: 0;
+    }
+    .cta:hover{ background: var(--accent-700); text-decoration: none; }
+
+    .hero-card{
+      background: #fff; border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow);
+      padding: 1rem;
+    }
+    .hero-card h3{ margin-top: 0; }
+
+    /* ==========
+       Fitur (Cards)
+       ========== */
+    .features{
+      padding: 3rem 0 2rem;
+    }
+    .grid{
+      display: grid; gap: 1.1rem;
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .card{
+      background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem; box-shadow: var(--shadow);
+    }
+    .card h3{ margin-top: .2rem; margin-bottom: .4rem; }
+    .card p{ color: var(--muted); margin-top: 0; }
+
+    /* ==========
+       Form Kontak
+       ========== */
+    .contact{
+      padding: 2.5rem 0 3.5rem;
+    }
+    form{
+      background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 1rem; box-shadow: var(--shadow);
+      max-width: 720px;
+    }
+    .row{ display: grid; gap: .8rem; grid-template-columns: 1fr 1fr; }
+    label{ font-weight: 600; }
+    input, textarea{
+      width: 100%; padding: .65rem .75rem; border-radius: 10px;
+      border: 1px solid var(--border); font: inherit;
+    }
+    textarea{ min-height: 130px; resize: vertical; }
+    .actions{ margin-top: .8rem; }
+    .btn{
+      display: inline-block; padding: .7rem 1rem; border-radius: 10px;
+      background: var(--accent); color: #fff; border: 0; font-weight: 600;
+    }
+    .btn:hover{ background: var(--accent-700); cursor: pointer; }
+
+    /* ==========
+       Footer
+       ========== */
+    footer{
+      border-top: 1px solid var(--border); background: var(--surface);
+      color: var(--muted);
+    }
+    footer .container{
+      display: flex; gap: 1rem; justify-content: space-between; align-items: center;
+      padding: 1rem 0;
+      font-size: .95rem;
+      flex-wrap: wrap;
+    }
+
+    /* ==========
+       Responsif
+       ========== */
+    @media (max-width: 900px){
+      .hero-inner{ grid-template-columns: 1fr; }
+      .grid{ grid-template-columns: repeat(2, 1fr); }
+      .row{ grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px){
+      .nav ul{ flex-wrap: wrap; }
+      .grid{ grid-template-columns: 1fr; }
+      .hero-inner{ padding: 2.2rem 0; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Link untuk loncat langsung ke konten utama (aksesibilitas) -->
+  <a href="#main" class="skip-link">Lewati ke konten utama</a>
+
+  <!-- ====== Header & Nav ====== -->
+  <header>
+    <div class="container nav" role="navigation" aria-label="Navigasi utama">
+      <div class="brand">LogoSederhana</div>
+      <ul>
+        <li><a href="#fitur">Fitur</a></li>
+        <li><a href="#kontak">Kontak</a></li>
+        <li><a href="#tentang">Tentang</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- ====== Hero ====== -->
+  <section class="hero" id="beranda" role="region" aria-label="Bagian pembuka">
+    <div class="container hero-inner">
+      <div>
+        <h1>Bangun Halaman Cepat dengan HTML + CSS</h1>
+        <p>Template mini yang responsif, bersih, dan mudah diubah. Cocok untuk landing page, portofolio, atau proyek tugas.</p>
+        <a class="cta" href="#kontak">Coba Sekarang</a>
+      </div>
+      <div class="hero-card" aria-label="Ringkasan fitur">
+        <h3>Kenapa template ini?</h3>
+        <ul>
+          <li>Tanpa framework, hanya HTML &amp; CSS.</li>
+          <li>Struktur semantik: header, main, section, footer.</li>
+          <li>Rapi di mobile &amp; desktop.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <main id="main">
+    <!-- ====== Fitur ====== -->
+    <section class="features container" id="fitur" aria-labelledby="judul-fitur">
+      <h2 id="judul-fitur">Fitur Utama</h2>
+      <p class="lead" style="color: var(--muted); margin-top:.2rem">Komponen sederhana yang sering dipakai.</p>
+      <div class="grid" role="list">
+        <article class="card" role="listitem">
+          <h3>Komponen Kartu</h3>
+          <p>Kartu dengan bayangan halus, cocok untuk highlight konten.</p>
+        </article>
+        <article class="card" role="listitem">
+          <h3>Grid Responsif</h3>
+          <p>Kolom otomatis menyesuaikan lebar layar tanpa JavaScript.</p>
+        </article>
+        <article class="card" role="listitem">
+          <h3>Aksesibilitas</h3>
+          <p>Fokus terlihat, skip link, dan hierarki heading yang jelas.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ====== Form Kontak ====== -->
+    <section class="contact container" id="kontak" aria-labelledby="judul-kontak">
+      <h2 id="judul-kontak">Hubungi Kami</h2>
+      <form aria-describedby="desk-kontak" action="#" method="post">
+        <p id="desk-kontak" style="color:var(--muted); margin-top:.2rem">Isi formulir di bawah ini. (Contoh saja, tidak mengirim data sungguhan.)</p>
+
+        <div class="row">
+          <div>
+            <label for="nama">Nama</label>
+            <input id="nama" name="nama" type="text" placeholder="Nama lengkap" required />
+          </div>
+          <div>
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" placeholder="nama@contoh.com" required />
+          </div>
+        </div>
+
+        <div style="margin-top:.8rem">
+          <label for="pesan">Pesan</label>
+          <textarea id="pesan" name="pesan" placeholder="Tulis pesan Anda di sini..."></textarea>
+        </div>
+
+        <div class="actions">
+          <button class="btn" type="submit">Kirim</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- ====== Tentang ====== -->
+    <section class="container" id="tentang" aria-labelledby="judul-tentang" style="padding:0 0 3rem">
+      <h2 id="judul-tentang">Tentang Template</h2>
+      <p style="color:var(--muted); max-width:70ch">
+        Template ini dibuat untuk demonstrasi struktur HTML semantik, gaya CSS yang bersih, dan praktik SEO dasar seperti
+        meta description dan judul yang informatif. Silakan ubah teks, warna, atau menambah komponen sesuai kebutuhan.
+      </p>
+    </section>
+  </main>
+
+  <!-- ====== Footer ====== -->
+  <footer>
+    <div class="container">
+      <span>© 2025 Halaman Sederhana.</span>
+      <span><a href="#beranda">Kembali ke atas ↑</a></span>
+    </div>
+  </footer>
+</body>
+</html>
